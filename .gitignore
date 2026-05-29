@@ -1,0 +1,13 @@
+*.swp
+*.swo
+*.bak
+.DS_Store
+tags
+
+# Lua / LuaRocks
+*.rock
+luarocks/
+.luarocks/
+
+# Test artifacts
+.tests/

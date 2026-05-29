@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "workspace.checkThirdParty": false,
+  "workspace.library": [
+    "$VIMRUNTIME/lua",
+    "$VIMRUNTIME/lua/vim/lsp"
+  ],
+  "diagnostics.globals": ["vim"],
+  "diagnostics.disable": ["missing-fields"],
+  "completion.callSnippet": "Replace",
+  "telemetry.enable": false
+}
