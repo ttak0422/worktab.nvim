@@ -17,20 +17,11 @@ local function make_picker(opts)
 
   local entries = worktab.list()
 
-  local max_name = 7
-  for _, e in ipairs(entries) do
-    local n = e.name or "[unnamed]"
-    if #n > max_name then
-      max_name = #n
-    end
-  end
-
   local displayer = entry_display.create({
     separator = " ",
     items = {
       { width = 1 },
       { width = 3 },
-      { width = max_name },
       { remaining = true },
     },
   })
@@ -41,21 +32,7 @@ local function make_picker(opts)
       data.is_current and "*" or " ",
       tostring(data.tabnr),
       data.name or "[unnamed]",
-      data.preview or "",
     })
-  end
-
-  local function preview_for(handle)
-    local wins = vim.api.nvim_tabpage_list_wins(handle)
-    if #wins == 0 then
-      return ""
-    end
-    local buf = vim.api.nvim_win_get_buf(wins[1])
-    local name = vim.api.nvim_buf_get_name(buf)
-    if name == "" then
-      return "[No Name]"
-    end
-    return vim.fn.fnamemodify(name, ":~:.")
   end
 
   pickers
@@ -64,10 +41,9 @@ local function make_picker(opts)
         finder = finders.new_table({
           results = entries,
           entry_maker = function(entry)
-            entry.preview = preview_for(entry.handle)
             return {
               value = entry,
-              ordinal = (entry.name or "") .. " " .. tostring(entry.tabnr) .. " " .. entry.preview,
+              ordinal = (entry.name or "") .. " " .. tostring(entry.tabnr),
               display = make_display,
             }
           end,
