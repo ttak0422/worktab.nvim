@@ -35,6 +35,17 @@ Return value of `list()`:
 }
 ```
 
+## Telescope integration
+
+Load the bundled extension to switch tabs from a picker:
+
+```lua
+require("telescope").load_extension("worktab")
+```
+
+Then run `:Telescope worktab worktab` (or
+`require("telescope").extensions.worktab.worktab()`).
+
 ## License
 
 MIT
