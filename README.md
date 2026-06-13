@@ -22,6 +22,7 @@ worktab.get_name()                   -- string|nil — nil if no name is set
 worktab.get_name(tabpage)            -- look up by tabpage handle
 
 worktab.clear()                      -- remove the current tab's name
+worktab.tabnew()                     -- create a new unnamed tab
 worktab.tabnew("api")                -- create a new tab named "api"
 worktab.list()                       -- list every tab's entry
 worktab.goto_tab("api")              -- switch by name or tabpage handle
@@ -34,6 +35,7 @@ worktab.goto_tab("api")              -- switch by name or tabpage handle
 ```
 
 Creates a new tabpage and assigns it the name `api`.
+Running `:Tabnew` without a name behaves like `:tabnew`.
 
 Return value of `list()`:
 
