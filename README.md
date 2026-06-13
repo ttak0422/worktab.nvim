@@ -4,7 +4,8 @@ Neovim's built-in tabs only carry a page number, which makes it hard to tell at 
 glance what each tab is *for*. `worktab.nvim` is a small extension that lets you
 attach a **name** to each tab.
 
-- API-only by design — you keep control of how the tabline renders
+- Small command surface for creating named tabs
+- API-first by design — you keep control of how the tabline renders
 - Names are stored on `vim.t` (tabpage variables), so closing a tab cleans them
   up automatically; no autocmds needed
 - Optional picker for [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
@@ -21,9 +22,18 @@ worktab.get_name()                   -- string|nil — nil if no name is set
 worktab.get_name(tabpage)            -- look up by tabpage handle
 
 worktab.clear()                      -- remove the current tab's name
+worktab.tabnew("api")                -- create a new tab named "api"
 worktab.list()                       -- list every tab's entry
 worktab.goto_tab("api")              -- switch by name or tabpage handle
 ```
+
+## Commands
+
+```vim
+:Tabnew api
+```
+
+Creates a new tabpage and assigns it the name `api`.
 
 Return value of `list()`:
 

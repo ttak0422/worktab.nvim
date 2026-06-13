@@ -36,6 +36,17 @@ function M.clear(tabpage)
   pcall(vim.api.nvim_tabpage_del_var, resolve(tabpage), VAR_NAME)
 end
 
+---Create a new tabpage and assign it a name.
+---@param name string
+---@return integer tabpage handle
+function M.tabnew(name)
+  vim.validate({ name = { name, "string" } })
+  vim.cmd("tabnew")
+  local tabpage = vim.api.nvim_get_current_tabpage()
+  M.set_name(name, tabpage)
+  return tabpage
+end
+
 ---@class WorktabEntry
 ---@field tabnr integer
 ---@field handle integer
