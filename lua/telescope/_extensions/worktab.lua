@@ -52,9 +52,15 @@ local function make_picker(opts)
         attach_mappings = function(prompt_bufnr)
           actions.select_default:replace(function()
             local selection = action_state.get_selected_entry()
+            local name = action_state.get_current_line()
             actions.close(prompt_bufnr)
             if selection then
               worktab.goto_tab(selection.value.handle)
+            elseif name:find("%S") then
+              -- The picker may be filtered or older than the live tab list.
+              if not worktab.goto_tab(name) then
+                worktab.tabnew(name)
+              end
             end
           end)
           return true

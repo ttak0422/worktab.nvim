@@ -58,6 +58,11 @@ require("telescope").load_extension("worktab")
 Then run `:Telescope worktab worktab` (or
 `require("telescope").extensions.worktab.worktab()`).
 
+Press `<CR>` to switch to the selected tab. If the search has no results, `<CR>`
+creates a tab with the prompt text as its name, or switches to an existing tab
+with that exact name. Empty or whitespace-only input does not create a tab;
+otherwise, spaces in the name are preserved. Canceling the picker creates nothing.
+
 ## License
 
 MIT
