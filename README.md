@@ -61,7 +61,10 @@ Then run `:Telescope worktab worktab` (or
 Press `<CR>` to switch to the selected tab. If the search has no results, `<CR>`
 creates a tab with the prompt text as its name, or switches to an existing tab
 with that exact name. Empty or whitespace-only input does not create a tab;
-otherwise, spaces in the name are preserved. Canceling the picker creates nothing.
+otherwise, spaces in the name are preserved. Press `<C-o>` in either insert or
+normal mode to use the exact prompt instead of the highlighted fuzzy match.
+If a tab with that exact name already exists, it is reused. Canceling the picker
+creates nothing.
 
 ## License
 

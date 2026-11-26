@@ -33,15 +33,16 @@ local function picker(prompt, has_selection, opts)
   return buf
 end
 
-local function enter(buf, mode)
+local function enter(buf, mode, key)
+  key = key or "<CR>"
   for _, map in ipairs(vim.api.nvim_buf_get_keymap(buf, mode or "i")) do
-    if map.lhs == "<CR>" then
-      assert(map.callback, "Enter callback missing")
+    if map.lhs == key then
+      assert(map.callback, "mapping callback missing: " .. key)
       map.callback()
       return
     end
   end
-  error("Enter mapping missing")
+  error("mapping missing: " .. key)
 end
 
 local function count()
@@ -122,5 +123,24 @@ reset()
 worktab.clear()
 enter(picker("", true))
 assert(count() == 1 and worktab.get_name() == nil, "unnamed selection changed")
+-- Ctrl-o uses the prompt, even with a fuzzy match or while results are stale.
+reset()
+local longer = worktab.tabnew("foo123")
+worktab.goto_tab("home")
+enter(picker("foo", true), "i", "<C-O>")
+assert(count() == 3 and worktab.get_name() == "foo", "Ctrl-o opened the fuzzy match")
+worktab.goto_tab("home")
+local prompt = picker("foo123", true)
+state.get_current_picker(prompt):set_prompt("foo")
+enter(prompt, "n", "<C-O>")
+assert(count() == 3 and worktab.get_name() == "foo", "Ctrl-o duplicated an exact name")
+worktab.goto_tab("home")
+prompt = picker("foo123", true)
+state.get_current_picker(prompt):set_prompt("   ")
+enter(prompt, "i", "<C-O>")
+assert(vim.api.nvim_buf_is_valid(prompt) and count() == 3, "blank Ctrl-o acted")
+actions.close(prompt)
+assert(vim.api.nvim_tabpage_is_valid(longer))
+
 print("worktab Telescope regressions passed")
 vim.cmd("qa!")
